@@ -2,40 +2,51 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Filament\Resources\ProductResource\Pages;
+use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Category;
+use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CategoryResource extends Resource
+class ProductResource extends Resource
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name')->required(),
+                TextInput::make('name')
+                    ->required(),
+                TextInput::make('price')
+                    ->numeric()
+                    ->required(),
+                TextInput::make('quantity')
+                    ->numeric()
+                    ->required(),
                 Toggle::make('is_active')
                     ->inline(false)
                     ->default(true),
-                Select::make('parent_id')
-                    ->label('parent')
+                Select::make('category_id')
+                    ->required()
+                    ->label('Category')
                     ->options(Category::all()
-                        ->pluck('name', 'id'))
+                        ->pluck('name', 'id')),
+                Textarea::make('description')
+
             ]);
     }
 
@@ -45,7 +56,7 @@ class CategoryResource extends Resource
             ->columns([
                 TextColumn::make('name'),
                 TextColumn::make('is_active')
-                    ->label('status')
+                    ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn(bool $state): string => $state ? 'active' : 'not-active')
                     ->icon(fn(bool $state): string => $state ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle')
@@ -53,9 +64,9 @@ class CategoryResource extends Resource
                         true => 'success',
                         false => 'danger',
                     }),
-                TextColumn::make('parent_id')
-                    ->formatStateUsing(fn(Category $category): string => $category?->name)
-                    ->label('parent')
+                TextColumn::make('category_id')
+                    ->label('Category')
+                    ->formatStateUsing(fn(Product $product): string => $product->category?->name)
             ])
             ->filters([
                 //
@@ -80,9 +91,9 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'index' => Pages\ListProducts::route('/'),
+            'create' => Pages\CreateProduct::route('/create'),
+            'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
     }
 }

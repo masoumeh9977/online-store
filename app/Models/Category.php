@@ -13,7 +13,7 @@ class Category extends Model
     ];
 
     protected $casts = [
-        'is_admin' => 'boolean',
+        'is_active' => 'boolean',
     ];
 
     public function parent()
