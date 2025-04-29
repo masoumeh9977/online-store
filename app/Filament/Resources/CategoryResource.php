@@ -10,8 +10,11 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
@@ -64,7 +67,11 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ViewAction::make()
+                    ->iconButton()
+                    ->color('primary'),
+                Tables\Actions\EditAction::make()->iconButton(),
+                Tables\Actions\DeleteAction::make()->iconButton(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -87,5 +94,35 @@ class CategoryResource extends Resource
             'create' => Pages\CreateCategory::route('/create'),
             'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
+    }
+
+    public static function infolist($infolist): \Filament\Infolists\Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Category Details')
+                    ->schema([
+                        TextEntry::make('name')
+                            ->label('Name'),
+
+                        TextEntry::make('is_active')
+                            ->label('Status')
+                            ->badge()
+                            ->color(fn(bool $state): string => $state ? 'success' : 'danger')
+                            ->formatStateUsing(fn(bool $state): string => $state ? 'Active' : 'Inactive'),
+
+                        TextEntry::make('parent.name')
+                            ->label('Parent Category')
+                            ->placeholder('No parent'),
+
+                        TextEntry::make('created_at')
+                            ->dateTime()
+                            ->label('Created'),
+
+                        TextEntry::make('updated_at')
+                            ->dateTime()
+                            ->label('Last Updated'),
+                    ])
+            ]);
     }
 }
