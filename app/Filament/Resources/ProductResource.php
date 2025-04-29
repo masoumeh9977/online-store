@@ -7,6 +7,9 @@ use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -29,24 +32,49 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->required(),
-                TextInput::make('price')
-                    ->numeric()
-                    ->required(),
-                TextInput::make('quantity')
-                    ->numeric()
-                    ->required(),
-                Toggle::make('is_active')
-                    ->inline(false)
-                    ->default(true),
-                Select::make('category_id')
-                    ->required()
-                    ->label('Category')
-                    ->options(Category::all()
-                        ->pluck('name', 'id')),
-                Textarea::make('description')
+                Grid::make(3)
+                    ->schema([
+                        Section::make('Product Information')
+                            ->columnSpan(2)
+                            ->schema([
+                                TextInput::make('name')
+                                    ->required(),
 
+                                Grid::make(2)
+                                    ->schema([
+                                        TextInput::make('price')
+                                            ->numeric()
+                                            ->required(),
+                                        TextInput::make('quantity')
+                                            ->numeric()
+                                            ->required(),
+                                    ]),
+
+                                Grid::make(2)
+                                    ->schema([
+                                        Select::make('category_id')
+                                            ->required()
+                                            ->label('Category')
+                                            ->options(Category::all()->pluck('name', 'id')),
+
+                                        Toggle::make('is_active')
+                                            ->inline(false)
+                                            ->default(true),
+                                    ]),
+
+                                Textarea::make('description'),
+                            ]),
+                        Section::make('Product Image')
+                            ->columnSpan(1) // Span 1 column
+                            ->schema([
+                                FileUpload::make('image')
+                                    ->label('Upload Image')
+                                    ->image()
+                                    ->directory('products')
+                                    ->imagePreviewHeight('300')
+                                    ->required(),
+                            ]),
+                    ]),
             ]);
     }
 
@@ -64,9 +92,7 @@ class ProductResource extends Resource
                         true => 'success',
                         false => 'danger',
                     }),
-                TextColumn::make('category_id')
-                    ->label('Category')
-                    ->formatStateUsing(fn(Product $product): string => $product->category?->name)
+                TextColumn::make('category.name')
             ])
             ->filters([
                 //
