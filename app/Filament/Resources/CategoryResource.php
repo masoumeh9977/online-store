@@ -45,7 +45,7 @@ class CategoryResource extends Resource
             ->columns([
                 TextColumn::make('name'),
                 TextColumn::make('is_active')
-                    ->label('status')
+                    ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn(bool $state): string => $state ? 'active' : 'not-active')
                     ->icon(fn(bool $state): string => $state ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle')
@@ -53,9 +53,7 @@ class CategoryResource extends Resource
                         true => 'success',
                         false => 'danger',
                     }),
-                TextColumn::make('parent_id')
-                    ->formatStateUsing(fn(Category $category): string => $category?->name)
-                    ->label('parent')
+                TextColumn::make('parent.name')
             ])
             ->filters([
                 //
