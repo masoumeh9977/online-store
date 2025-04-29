@@ -27,7 +27,11 @@ class UserResource extends Resource
     protected static ?string $navigationLabel = 'Users';
 
     protected static ?string $recordTitleAttribute = 'name';
-    protected static ?int $navigationSort = 1;
+
+    public static function getNavigationSort(): ?int
+    {
+        return 1;
+    }
 
     public static function form(Form $form): Form
     {

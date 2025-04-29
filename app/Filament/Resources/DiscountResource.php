@@ -36,6 +36,11 @@ class DiscountResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
 
+    public static function getNavigationSort(): ?int
+    {
+        return 5;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
