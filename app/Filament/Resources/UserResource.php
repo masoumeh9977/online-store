@@ -135,7 +135,7 @@ class UserResource extends Resource
                     ->preload(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()->iconButton(),
+                Tables\Actions\ViewAction::make()->iconButton()->color('primary'),
                 Tables\Actions\EditAction::make()->iconButton(),
                 Tables\Actions\DeleteAction::make()->iconButton(),
             ])
