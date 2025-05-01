@@ -16,10 +16,16 @@ class Order extends Model
         'status',
         'total_amount',
         'shipping_address',
+        'cart_id',
     ];
 
     protected $casts = [
         'status' => OrderStatus::class
     ];
+
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class);
+    }
 
 }
