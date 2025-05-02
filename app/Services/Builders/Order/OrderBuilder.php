@@ -4,11 +4,10 @@ namespace App\Services\Builders\Order;
 
 use App\DiscountType;
 use App\Models\Order;
-use App\Models\Product;
-use App\Services\Repositories\DiscountRepository;
-use App\Services\Repositories\OrderProductRepository;
-use App\Services\Repositories\OrderRepository;
-use App\Services\Repositories\ProductRepository;
+use App\Services\Repositories\ModelRepositories\CartItemRepository;
+use App\Services\Repositories\ModelRepositories\CartRepository;
+use App\Services\Repositories\ModelRepositories\DiscountRepository;
+use App\Services\Repositories\ModelRepositories\OrderRepository;
 use Illuminate\Support\Str;
 
 class OrderBuilder implements OrderBuilderInterface
@@ -21,22 +20,9 @@ class OrderBuilder implements OrderBuilderInterface
         $this->data = $data;
     }
 
-    public function setUser()
+    public function setDiscount(string $code = null): static
     {
-        $this->data['user_id'] = auth()->user()->id;
-        return $this;
-    }
-
-    public function setTrackingCode()
-    {
-        $this->data['tracking_code'] = Str::uuid();
-        return $this;
-    }
-
-
-    public function setDiscount(string $code = null)
-    {
-        $discountRepo = new DiscountRepository();
+        $discountRepo = app(DiscountRepository::class);
         if ($code) {
             $discount = $discountRepo->all([
                 'code' => $code
@@ -44,57 +30,94 @@ class OrderBuilder implements OrderBuilderInterface
             $this->data['discount_id'] = $discount->id;
         }
         return $this;
-
     }
 
-    public function setTotalAmount()
+    public function createCart($discountId = null): static
     {
-        $orderProducts = $this->orderProductRepo->all(['order_id' => $this->order->id]);
-
-        $total = $orderProducts->sum(fn($op) => $op->product->price * $op->quantity);
-
-        if (isset($this->data['discount_id'])) {
-            $discount = $this->discountRepo->find($this->data['discount_id']);
-
-            if ($discount) {
-                $total -= $discount->type === DiscountType::Percentage->value
-                    ? $total * ($discount->value / 100)
-                    : $discount->value;
-            }
-        }
-        $this->data['total_amount'] = max($total, 0);
-        return $this->data['total_amount'];
-    }
-
-    public function setProducts(array $products)
-    {
-        $prodRepository = new ProductRepository();
-        $orderProdRepository = new OrderProductRepository();
-        foreach ($products as $product) {
-            $fetchedProd = $prodRepository->find($product['id']);
-            if ($fetchedProd) {
-                $orderProdRepository->create([
-                    'product_id' => $product['id'],
-                    'order_id' => $this->order->id,
-                    'quantity' => $product['quantity']
-                ]);
-            }
+        $cartRepo = app(CartRepository::class);
+        $cart = $cartRepo->create(['discount_id' => $discountId]);
+        if ($cart) {
+            $this->data['cart_id'] = $cart->refresh()->id;
         }
         return $this;
     }
 
+    public function createCartItems(array $products, $cartId): static
+    {
+        $cartItemRepo = app(CartItemRepository::class);
+        foreach ($products as $product) {
+            $cartItemRepo->create([
+                'cart_id' => $cartId,
+                'product_id' => $product['id'],
+                'quantity' => $product['quantity'],
+            ]);
+        }
+        return $this;
+    }
+
+    public function calculateTotalAmount($cartId): static
+    {
+        $cart = (app(CartRepository::class))->find($cartId)?->first();
+        $total = $cart?->cartItems->sum(fn($item) => $item->product->price * $item->quantity) ?? 0;
+        $this->data['total_amount'] = $total;
+        return $this;
+    }
+
+    public function calculateDiscountAmount($totalAmount, $discountId = null): static
+    {
+        $discountAmount = 0;
+
+        if ($discountId) {
+            $discount = (app(DiscountRepository::class))->find($discountId)?->first();
+
+            if ($discount) {
+                $discountAmount = $discount->type === DiscountType::Fixed->value
+                    ? $discount->value
+                    : $totalAmount * ($discount->value / 100);
+            }
+        }
+        $this->data['discount_amount'] = $discountAmount;
+        return $this;
+    }
+
+    public function calculateSubTotalAmount($totalAmount, $discountAmount): static
+    {
+        $this->data['sub_total_amount'] = ($totalAmount - $discountAmount);
+        return $this;
+    }
+
+    public function setUser(): static
+    {
+        $this->data['user_id'] = auth()->user()->id;
+        return $this;
+    }
+
+    public function setTrackingCode(): static
+    {
+        $this->data['tracking_code'] = Str::uuid();
+        return $this;
+    }
+
+    public function storeOrder()
+    {
+        $orderRepo = app(OrderRepository::class);
+        $this->order = $orderRepo->create($this->data);
+        return $this->order->refresh();
+    }
 
     public function build(): Order
     {
-        $this->setUser()
+        return $this->setDiscount($this->data['discount_code'] ?? null)
+            ->createCart($this->data['discount_id'] ?? null)
+            ->createCartItems($this->data['products'], $this->data['cart_id'])
+            ->calculateTotalAmount($this->data['cart_id'])
+            ->calculateDiscountAmount($this->data['total_amount'], $this->data['discount_id'] ?? null)
+            ->calculateSubTotalAmount($this->data['total_amount'], $this->data['discount_amount'])
+            ->setUser()
             ->setTrackingCode()
-            ->setDiscount($this->data['discount_code'] ?? null);
-
-        $orderRepo = new OrderRepository();
-        $this->order = $orderRepo->create($this->data);
-        $this->order = $this->order->refresh();
-        $this->setProducts($this->data['products'])->setTotalAmount();
-        return $this->order;
+            ->storeOrder();
 
     }
+
+
 }

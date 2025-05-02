@@ -2,30 +2,30 @@
 
 namespace App\Services\Repositories;
 
-use App\Models\Product;
 
-class ProductRepository implements BaseRepositoryInterface
+abstract class BaseRepository implements BaseRepositoryInterface
 {
+    public $model;
 
     public function all(array $conditions = [])
     {
-        return Product::where($conditions)->get();
+        return $this->model::where($conditions)->get();
     }
 
     public function paginate(int $perPage = 15, array $conditions = [])
     {
-        return Product::where($conditions)->paginate($perPage);
+        return $this->model::where($conditions)->paginate($perPage);
     }
 
     public function find($id)
     {
-        return Product::find($id);
+        return $this->model::find($id);
 
     }
 
     public function create(array $data)
     {
-        return Product::create($data);
+        return $this->model::create($data);
     }
 
     public function update($item, array $data)
@@ -39,6 +39,6 @@ class ProductRepository implements BaseRepositoryInterface
             $product = $this->find($id);
             return $product?->delete();
         }
-        return Product::where($conditions)->query()->delete();
+        return $this->model::where($conditions)->query()->delete();
     }
 }
