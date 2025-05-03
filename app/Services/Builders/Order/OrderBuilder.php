@@ -66,7 +66,7 @@ class OrderBuilder implements OrderBuilderInterface
 
     public function calculateTotalAmount($cartId): static
     {
-        $cart = (app(CartRepository::class))->find($cartId)?->first();
+        $cart = (app(CartRepository::class))->find($cartId);
         $total = $cart?->items->sum(fn($item) => $item->product->price * $item->quantity) ?? 0;
         $this->data['total_amount'] = $total;
         return $this;
@@ -77,7 +77,7 @@ class OrderBuilder implements OrderBuilderInterface
         $discountAmount = 0;
 
         if ($discountId) {
-            $discount = (app(DiscountRepository::class))->find($discountId)?->first();
+            $discount = (app(DiscountRepository::class))->find($discountId);
             if ($discount) {
                 $discountAmount = $discount->type === DiscountType::Fixed
                     ? $discount->value

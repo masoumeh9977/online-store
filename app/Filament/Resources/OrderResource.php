@@ -27,10 +27,12 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+
     public static function getNavigationSort(): ?int
     {
         return 3;
     }
+
     public static function canCreate(): bool
     {
         return false;
@@ -98,6 +100,11 @@ class OrderResource extends Resource
 
                 TextColumn::make('total_amount')
                     ->label('Total')
+                    ->money('USD')
+                    ->sortable(),
+
+                TextColumn::make('discount_amount')
+                    ->label('Discount')
                     ->money('USD')
                     ->sortable(),
 
@@ -175,7 +182,7 @@ class OrderResource extends Resource
         ];
     }
 
-    public static function infolist( $infolist): \Filament\Infolists\Infolist
+    public static function infolist($infolist): \Filament\Infolists\Infolist
     {
         return $infolist
             ->schema([
@@ -204,6 +211,10 @@ class OrderResource extends Resource
                                     }),
 
                                 TextEntry::make('total_amount')
+                                    ->label('Total Amount')
+                                    ->money('USD'),
+
+                                TextEntry::make('discount_amount')
                                     ->label('Total Amount')
                                     ->money('USD'),
 
