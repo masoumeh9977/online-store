@@ -22,13 +22,22 @@ class OrderBuilder implements OrderBuilderInterface
 
     public function setDiscount(string $code = null): static
     {
-        $discountRepo = app(DiscountRepository::class);
-        if ($code) {
-            $discount = $discountRepo->all([
-                'code' => $code
-            ])->first();
-            $this->data['discount_id'] = $discount->id;
+        if (!$code) {
+            return $this;
         }
+        $discountRepo = app(DiscountRepository::class);
+        $discount = $discountRepo->all(['code' => $code])->first();
+
+        if (!$discount || $discount->used_count >= $discount->max_usage) {
+            return $this;
+        }
+
+        $discountRepo->update($discount, [
+            'used_count' => $discount->used_count + 1,
+        ]);
+
+        $this->data['discount_id'] = $discount->id;
+
         return $this;
     }
 
@@ -58,7 +67,7 @@ class OrderBuilder implements OrderBuilderInterface
     public function calculateTotalAmount($cartId): static
     {
         $cart = (app(CartRepository::class))->find($cartId)?->first();
-        $total = $cart?->cartItems->sum(fn($item) => $item->product->price * $item->quantity) ?? 0;
+        $total = $cart?->items->sum(fn($item) => $item->product->price * $item->quantity) ?? 0;
         $this->data['total_amount'] = $total;
         return $this;
     }
@@ -69,9 +78,8 @@ class OrderBuilder implements OrderBuilderInterface
 
         if ($discountId) {
             $discount = (app(DiscountRepository::class))->find($discountId)?->first();
-
             if ($discount) {
-                $discountAmount = $discount->type === DiscountType::Fixed->value
+                $discountAmount = $discount->type === DiscountType::Fixed
                     ? $discount->value
                     : $totalAmount * ($discount->value / 100);
             }
@@ -82,7 +90,7 @@ class OrderBuilder implements OrderBuilderInterface
 
     public function calculateSubTotalAmount($totalAmount, $discountAmount): static
     {
-        $this->data['sub_total_amount'] = ($totalAmount - $discountAmount);
+        $this->data['total_amount'] = ($totalAmount - $discountAmount);
         return $this;
     }
 

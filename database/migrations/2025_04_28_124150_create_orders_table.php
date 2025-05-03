@@ -15,7 +15,8 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->uuid('tracking_code')->unique();
             $table->string('status')->default(\App\OrderStatus::Pending->value);
-            $table->unsignedBigInteger('total_amount')->nullable();
+            $table->unsignedBigInteger('total_amount');
+            $table->unsignedBigInteger('discount_amount')->default(0);
             $table->text('shipping_address');
             $table->foreignId('cart_id')->constrained()->cascadeOnDelete();
             $table->timestamps();

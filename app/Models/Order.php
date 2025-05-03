@@ -14,6 +14,7 @@ class Order extends Model
         'user_id',
         'tracking_code',
         'status',
+        'discount_amount',
         'total_amount',
         'shipping_address',
         'cart_id',

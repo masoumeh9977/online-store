@@ -101,7 +101,7 @@ class OrderResource extends Resource
                     ->money('USD')
                     ->sortable(),
 
-                TextColumn::make('discount.code')
+                TextColumn::make('cart.discount.code')
                     ->label('Discount Code')
                     ->placeholder('No discount'),
 
@@ -235,7 +235,7 @@ class OrderResource extends Resource
 
                 Section::make('Order Items')
                     ->schema([
-                        RepeatableEntry::make('orderProducts')
+                        RepeatableEntry::make('cart.items')
                             ->schema([
                                 TextEntry::make('product.name')
                                     ->label('Product'),

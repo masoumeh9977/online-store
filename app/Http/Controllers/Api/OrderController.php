@@ -13,7 +13,7 @@ class OrderController extends Controller
     {
         try {
             $service = new OrderService();
-            $order = $service->buildOrder($request->validated());
+            $order = $service->buildOrder($request->all());
             return BaseResource::success($order);
         } catch (\Exception $e) {
             logger()->info($e);
