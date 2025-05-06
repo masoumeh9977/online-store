@@ -15,7 +15,7 @@ class ValidDiscountUsage implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $discount = Discount::find($value);
+        $discount = Discount::whereCode($value)->first();
         if (!$discount) {
             $fail('The selected discount is invalid.');
             return;

@@ -33,8 +33,9 @@ class ValidProductQuantity implements ValidationRule
             $fail('Product Not Found!');
             return;
         }
-        if (($value + $product->quantity) > $product->quantity) {
-            $fail('The requested quantity for product ID {$this->productId} exceeds available stock ({$product->quantity}).');
+        logger()->info('quantity: ' . $value . ' $product->quantity: '. $product->quantity);
+        if (( $product->quantity - $value) < 0) {
+            $fail('The requested quantity for product ID '.$productId. ' exceeds available stock ('.$product->quantity.').');
         }
     }
 }
