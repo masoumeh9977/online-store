@@ -6,21 +6,19 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Product;
-use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProductResource extends Resource
 {
@@ -72,11 +70,11 @@ class ProductResource extends Resource
                         Section::make('Product Image')
                             ->columnSpan(1) // Span 1 column
                             ->schema([
-                                FileUpload::make('image')
-                                    ->label('Upload Image')
+                                SpatieMediaLibraryFileUpload::make('image')
+                                    ->collection('product_images')
                                     ->image()
-                                    ->directory('products')
                                     ->imagePreviewHeight('300')
+                                    ->preserveFilenames()
                                     ->required(),
                             ]),
                     ]),
@@ -87,6 +85,10 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('image')
+                    ->label('Product Image')
+                    ->getStateUsing(fn ($record) => $record->getFirstMediaUrl('product_images'))
+                    ->circular(),
                 TextColumn::make('name'),
                 TextColumn::make('is_active')
                     ->label('Status')
