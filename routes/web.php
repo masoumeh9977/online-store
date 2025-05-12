@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Website\IndexController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::as('website')->prefix('')->group(function (){
+    Route::get('/', [IndexController::class, 'index']);
+
 });

@@ -28,4 +28,9 @@ class Product extends Model implements HasMedia
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
 }
