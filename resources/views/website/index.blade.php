@@ -20,11 +20,11 @@
             <div class="col-lg-3 col-md-6 col-12 mt-4 pt-2">
                 <div class="card shop-list border-0 position-relative">
                     <div class="shop-image position-relative overflow-hidden rounded shadow">
-                        <a href="shop-product-detail.html">
-                            <img src="images/s1.jpg" class="img-fluid" alt="">
+                        <a href="#">
+                            <img src="{{$product->getFirstMediaUrl('product_images')}}" class="img-fluid" alt="">
                         </a>
-                        <a href="shop-product-detail.html" class="overlay-work">
-                            <img src="images/s-2.jpg" class="img-fluid" alt="">
+                        <a href="#" class="overlay-work">
+                            <img src="{{$product->getFirstMediaUrl('product_images')}}" class="img-fluid" alt="">
                         </a>
                         <ul class="list-unstyled shop-icons">
                             <li class="mt-2">
