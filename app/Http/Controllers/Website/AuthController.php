@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Website\Auth\LoginRequest;
+use App\Http\Requests\Website\Auth\SignupRequest;
 use App\Models\User;
+use App\Services\UserService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -46,6 +49,27 @@ class AuthController extends Controller
                 Auth::logout();
                 alert()->success('Success', 'Logged out successfully!');
             }
+            return redirect()->route('website.index');
+
+        } catch (\Exception $e) {
+            logger()->error($e);
+            alert()->error('Error', 'Something went wrong, please try again later.');
+            return redirect()->back();
+        }
+    }
+
+    public function signupIndex()
+    {
+        return view('website.auth.signup');
+    }
+
+    public function signup(SignupRequest $request)
+    {
+        try {
+            $service = new UserService();
+            $user = $service->createCustomer($request->all());
+            Auth::login($user);
+            alert()->success('Success', 'Signup successfully!');
             return redirect()->route('website.index');
 
         } catch (\Exception $e) {

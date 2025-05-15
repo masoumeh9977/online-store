@@ -3,11 +3,9 @@
 namespace App\Http\Requests\Website\Auth;
 
 use App\Http\Requests\BaseRequest;
-use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends BaseRequest
+class SignupRequest extends BaseRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -16,8 +14,10 @@ class LoginRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'name' => ['required', 'string'],
+            'email' => ['required', 'string', 'email', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:4'],
+            'agreement' => ['required', 'accepted']
         ];
     }
 }
