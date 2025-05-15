@@ -66,7 +66,7 @@
     src: url('fonts/iransans/eot/IRANSansWeb_Black.eot');
     src: url('fonts/iransans/eot/IRANSansWeb_Black.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
     url('fonts/iransans/woff2/IRANSansWeb_Black.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
-	
+
 	url('fonts/iransans/woff/IRANSansWeb_Black.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
     url('fonts/iransans/ttf/IRANSansWeb_Black.ttf') format('truetype');
 }
@@ -313,7 +313,7 @@
     src: url('fonts/dana/eot/dana-medium.eot');
     src: url('fonts/dana/eot/dana-medium.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
     url('fonts/dana/woff2/dana-medium.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
-	
+
 	url('fonts/dana/woff/dana-medium.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
 }
 @font-face {
@@ -401,7 +401,7 @@
     font-family: dana;
     font-style: italic;
     font-weight: 500;
-	
+
 	src: url('fonts/dana/eot/dana-mediumitalic.eot');
     src: url('fonts/dana/eot/dana-mediumitalic.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
     url('fonts/dana/woff2/dana-mediumitalic.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
@@ -482,7 +482,7 @@
 @font-face {
     font-family: anjoman;
     font-style: normal;
-	
+
 	font-weight: bold;
     src: url('fonts/anjoman/eot/Anjoman-Bold.eot?#') format('eot'),  /* IE6ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ8 */
     url('fonts/anjoman/woff/Anjoman-Bold.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
@@ -2412,9 +2412,9 @@ body {
  overflow-x:hidden !important;
  font-size:16px;
  color:#161c2d;
- direction: rtl;
- text-align: right;
- font-family: IRANSansfanum;
+    direction: {{ App::getLocale() === 'fa' ? 'rtl' : 'ltr' }};
+    text-align: {{ App::getLocale() === 'fa' ? 'right' : 'left' }};
+    font-family: {{ App::getLocale() === 'fa' ? 'IRANSansfanum' : 'sans-serif' }};
 }
 h1,
 h2,
