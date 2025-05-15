@@ -20,6 +20,16 @@
     <!-- Main Css -->
     <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt"/>
     <link href="css/colors/default.css" rel="stylesheet" id="color-opt">
+    <style>
+        body {
+            overflow-x:hidden !important;
+            font-size:16px;
+            color:#161c2d;
+            direction: {{ App::getLocale() === 'fa' ? 'rtl' : 'ltr' }};
+            text-align: {{ App::getLocale() === 'fa' ? 'right' : 'left' }};
+            font-family: {{ App::getLocale() === 'fa' ? 'IRANSansfanum' : 'sans-serif' }};
+        }
+    </style>
 </head>
 
 <body>

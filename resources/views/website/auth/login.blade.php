@@ -44,9 +44,11 @@
 
                                         <div class="col-lg-12">
                                             <div class="d-flex justify-content-between">
-                                                <p class="forgot-pass mb-0"><a href="auth-re-password.html"
-                                                                               class="text-dark fw-bold">Forgot
-                                                        Password?</a></p>
+                                                <p class="forgot-pass mb-4">
+                                                    <a href="auth-re-password.html" class="text-dark fw-bold">
+                                                        Forgot Password?
+                                                    </a>
+                                                </p>
                                             </div>
                                         </div>
 

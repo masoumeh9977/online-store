@@ -16,7 +16,7 @@
                             <a class="dropdown-item text-dark" href="#"><i
                                     class="uil uil-clipboard-notes align-middle me-1"></i>My Orders</a>
                             <div class="dropdown-divider my-3 border-top"></div>
-                            <a class="dropdown-item text-dark" href="#"><i
+                            <a class="dropdown-item text-dark" href="{{route('website.logout')}}"><i
                                     class="uil uil-sign-out-alt align-middle me-1"></i> Logout </a>
                         </div>
                     </div>

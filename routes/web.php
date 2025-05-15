@@ -11,5 +11,6 @@ Route::as('website.')->prefix('')->group(function () {
 
     Route::get('login', [AuthController::class, 'loginIndex'])->name('login.index');
     Route::post('login', [AuthController::class, 'login'])->name('login');
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 });

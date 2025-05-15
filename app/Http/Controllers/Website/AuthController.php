@@ -24,12 +24,28 @@ class AuthController extends Controller
                 return redirect()->back();
             }
 
-            if (! $user->hasRole('customer')){
+            if (!$user->hasRole('customer')) {
                 alert()->error('Error', "You don't have the valid permission!");
                 return redirect()->back();
             }
             Auth::login($user);
             alert()->success('Success', 'Logged in successfully!');
+            return redirect()->route('website.index');
+
+        } catch (\Exception $e) {
+            logger()->error($e);
+            alert()->error('Error', 'Something went wrong, please try again later.');
+            return redirect()->back();
+        }
+    }
+
+    public function logout()
+    {
+        try {
+            if (Auth::user()) {
+                Auth::logout();
+                alert()->success('Success', 'Logged out successfully!');
+            }
             return redirect()->route('website.index');
 
         } catch (\Exception $e) {
