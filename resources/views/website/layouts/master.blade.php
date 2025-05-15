@@ -40,11 +40,7 @@
 
 @yield('carousel')
 
-<section class="section">
-    <div class="container mt-100 mt-60">
-        @yield('content')
-    </div>
-</section>
+@yield('content')
 
 <!-- Footer Start -->
 @include('website.layouts.footer')
@@ -53,7 +49,7 @@
 <!-- Back to top -->
 @include('website.partials.top-btn')
 <!-- Back to top -->
-
+@include('sweetalert::alert')
 <!-- Style switcher -->
 <div id="style-switcher" class="bg-light border p-3 pt-2 pb-2" onclick="toggleSwitcher()">
     <div>
