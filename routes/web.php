@@ -3,6 +3,7 @@
 use App\Http\Controllers\Website\AuthController;
 use App\Http\Controllers\Website\IndexController;
 use App\Http\Controllers\Website\MyController;
+use App\Http\Controllers\Website\ProductController;
 use App\Http\Controllers\Website\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,10 @@ Route::as('website.')->prefix('')->group(function () {
         Route::post('update', [UserController::class, 'updateUser'])->name('update');
         Route::post('reset/password', [UserController::class, 'resetPassword'])->name('reset.password');
         Route::post('reset/address', [UserController::class, 'resetAddress'])->name('reset.address');
+    });
+
+    Route::as('product.')->prefix('product')->group(function () {
+        Route::get('{product}/show', [ProductController::class, 'show'])->name('show');
     });
 
 });

@@ -30,6 +30,7 @@
             font-family: {{ App::getLocale() === 'fa' ? 'IRANSansfanum' : 'sans-serif' }};
         }
     </style>
+    @yield('styles')
 </head>
 
 <body>

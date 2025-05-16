@@ -21,10 +21,10 @@
                     <div class="col-lg-3 col-md-6 col-12 mt-4 pt-2">
                         <div class="card shop-list border-0 position-relative">
                             <div class="shop-image position-relative overflow-hidden rounded shadow">
-                                <a href="{{route('website.product.show', $product)}}">
+                                <a href="shop-product-detail.html">
                                     <img src="images/s1.jpg" class="img-fluid" alt="">
                                 </a>
-                                <a href="{{route('website.product.show', $product)}}" class="overlay-work">
+                                <a href="shop-product-detail.html" class="overlay-work">
                                     <img src="images/s-2.jpg" class="img-fluid" alt="">
                                 </a>
                                 <ul class="list-unstyled shop-icons">
@@ -43,7 +43,7 @@
                                 </ul>
                             </div>
                             <div class="card-body content pt-4 p-2">
-                                <a href="{{route('website.product.show', $product)}}"
+                                <a href="shop-product-detail.html"
                                    class="text-dark product-name h6">{{$product->name}}</a>
                                 <div class="d-flex justify-content-between mt-1">
                                     <h6 class="text-muted small fst-italic mb-0 mt-1">{{$product->price}}
