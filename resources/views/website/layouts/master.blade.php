@@ -11,15 +11,26 @@
     <!-- favicon -->
     <link rel="shortcut icon" href="images/favicon.ico">
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- Slider -->
-    <link rel="stylesheet" href="css/tiny-slider.css"/>
+    <link rel="stylesheet" href="/css/tiny-slider.css"/>
     <!-- Icons -->
-    <link href="css/materialdesignicons.min.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="unicons.iconscout.com/release/v3.0.6/css/line.css">
+    <link href="/css/materialdesignicons.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/unicons.iconscout.com/release/v3.0.6/css/line.css">
     <!-- Main Css -->
-    <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt"/>
-    <link href="css/colors/default.css" rel="stylesheet" id="color-opt">
+    <link href="/css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt"/>
+    <link href="/css/colors/default.css" rel="stylesheet" id="color-opt">
+    <style>
+        body {
+            overflow-x: hidden !important;
+            font-size: 16px;
+            color: #161c2d;
+            direction: {{ App::getLocale() === 'fa' ? 'rtl' : 'ltr' }};
+            text-align: {{ App::getLocale() === 'fa' ? 'right' : 'left' }};
+            font-family: {{ App::getLocale() === 'fa' ? 'IRANSansfanum' : 'sans-serif' }};
+        }
+    </style>
+    @yield('styles')
 </head>
 
 <body>
@@ -40,11 +51,7 @@
 
 @yield('carousel')
 
-<section class="section">
-    <div class="container mt-100 mt-60">
-        @yield('content')
-    </div>
-</section>
+@yield('content')
 
 <!-- Footer Start -->
 @include('website.layouts.footer')
@@ -53,7 +60,7 @@
 <!-- Back to top -->
 @include('website.partials.top-btn')
 <!-- Back to top -->
-
+@include('sweetalert::alert')
 <!-- Style switcher -->
 <div id="style-switcher" class="bg-light border p-3 pt-2 pb-2" onclick="toggleSwitcher()">
     <div>
@@ -96,16 +103,19 @@
 <!-- end Style switcher -->
 
 <!-- javascript -->
-<script src="js/bootstrap.bundle.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
 <!-- SLIDER -->
-<script src="js/tiny-slider.js"></script>
+<script src="/js/tiny-slider.js"></script>
 <!-- Icons -->
-<script src="js/feather.min.js"></script>
+<script src="/js/feather.min.js"></script>
 <!-- Switcher -->
-<script src="js/switcher.js"></script>
+<script src="/js/switcher.js"></script>
 <!-- Main Js -->
-<script src="js/plugins.init.js"></script>
-<script src="js/app.js"></script>
+<script src="/js/plugins.init.js"></script>
+<script src="/js/app.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@yield('scripts')
+
 </body>
 
 </html>
