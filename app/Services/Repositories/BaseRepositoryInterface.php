@@ -13,6 +13,7 @@ interface BaseRepositoryInterface
     public function create(array $data);
 
     public function update($item, array $data);
+    public function updateOrCreate(array $conditions, array $values);
 
     public function delete($id, $conditions = []);
 

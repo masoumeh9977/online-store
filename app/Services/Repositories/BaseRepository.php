@@ -33,6 +33,12 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $item->update($data);
     }
 
+    public function updateOrCreate(array $conditions, array $values)
+    {
+        return $this->model->updateOrCreate($conditions, $values);
+    }
+
+
     public function delete($id, $conditions = [])
     {
         if ($id) {
