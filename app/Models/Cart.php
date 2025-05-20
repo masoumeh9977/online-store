@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     protected $fillable = [
-        'discount_id'
+        'user_id'
     ];
 
     public function items()
@@ -24,5 +24,9 @@ class Cart extends Model
     {
         return $this->belongsToMany(Product::class, 'cart_items')
             ->withPivot('quantity');
+    }
+
+    public function order(){
+        return $this->hasOne(Order::class);
     }
 }

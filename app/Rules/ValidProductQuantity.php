@@ -16,16 +16,21 @@ class ValidProductQuantity implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        preg_match('/products\.(\d+)\.quantity/', $attribute, $matches);
-
-        if (!isset($matches[1])) {
-            $fail('Invalid product quantity structure.');
+        // Case 1: products.*.quantity structure
+        if (preg_match('/products\.(\d+)\.quantity/', $attribute, $matches)) {
+            $index = $matches[1];
+            $productId = request("products.$index.id");
+        } // Case 2: standalone quantity and product_id
+        elseif ($attribute === 'quantity') {
+            $productId = request('product_id');
+        } // Unknown format
+        else {
+            $fail('Invalid quantity field structure.');
             return;
         }
-        $index = $matches[1];
-        $productId = request("products.$index.id");
+
         if (!$productId) {
-            $fail("Missing product ID for item at index $index.");
+            $fail("Missing product ID.");
             return;
         }
         $product = Product::find($productId);
@@ -33,9 +38,9 @@ class ValidProductQuantity implements ValidationRule
             $fail('Product Not Found!');
             return;
         }
-        logger()->info('quantity: ' . $value . ' $product->quantity: '. $product->quantity);
-        if (( $product->quantity - $value) < 0) {
-            $fail('The requested quantity for product ID '.$productId. ' exceeds available stock ('.$product->quantity.').');
+
+        if (($product->quantity - $value) < 0) {
+            $fail('The requested quantity exceeds available stock (' . $product->quantity . ').');
         }
     }
 }

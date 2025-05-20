@@ -11,4 +11,11 @@ class CartRepository extends BaseRepository
     {
        $this->model = new Cart();
     }
+
+    public function getCartWithoutOrderForUser($userId)
+    {
+        return $this->model::where('user_id', $userId)
+            ->whereDoesntHave('order')
+            ->first();
+    }
 }
