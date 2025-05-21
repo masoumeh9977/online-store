@@ -25,10 +25,7 @@ class StoreOrderRequest extends FormRequest
     {
         return [
             'discount_code' => ['nullable', 'string', 'exists:discounts,code', new ValidDiscountUsage()],
-            'shipping_address' => ['required', 'string'],
-            'products' => ['required', 'array'],
-            'products.*.id' => ['required', 'exists:products,id'],
-            'products.*.quantity' => ['required', 'numeric', new ValidProductQuantity()],
+            'shipping_address' => ['nullable', 'string']
         ];
     }
 }

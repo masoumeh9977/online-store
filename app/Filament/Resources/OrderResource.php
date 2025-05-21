@@ -108,7 +108,7 @@ class OrderResource extends Resource
                     ->money('USD')
                     ->sortable(),
 
-                TextColumn::make('cart.discount.code')
+                TextColumn::make('discount.code')
                     ->label('Discount Code')
                     ->placeholder('No discount'),
 
@@ -215,7 +215,7 @@ class OrderResource extends Resource
                                     ->money('USD'),
 
                                 TextEntry::make('discount_amount')
-                                    ->label('Total Amount')
+                                    ->label('Discount Amount')
                                     ->money('USD'),
 
                                 TextEntry::make('created_at')

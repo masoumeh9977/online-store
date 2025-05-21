@@ -18,6 +18,7 @@ class Order extends Model
         'total_amount',
         'shipping_address',
         'cart_id',
+        'discount_id'
     ];
 
     protected $casts = [
@@ -31,5 +32,10 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function discount()
+    {
+        return $this->belongsTo(Discount::class);
     }
 }

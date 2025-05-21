@@ -4,10 +4,12 @@ namespace App\Services\Builders\Order;
 
 use App\DiscountType;
 use App\Models\Order;
+use App\Services\CartService;
 use App\Services\Repositories\ModelRepositories\CartItemRepository;
 use App\Services\Repositories\ModelRepositories\CartRepository;
 use App\Services\Repositories\ModelRepositories\DiscountRepository;
 use App\Services\Repositories\ModelRepositories\OrderRepository;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class OrderBuilder implements OrderBuilderInterface
@@ -41,26 +43,14 @@ class OrderBuilder implements OrderBuilderInterface
         return $this;
     }
 
-    public function createCart($discountId = null): static
+    public function setCart($userId)
     {
-        $cartRepo = app(CartRepository::class);
-        $cart = $cartRepo->create(['discount_id' => $discountId]);
-        if ($cart) {
-            $this->data['cart_id'] = $cart->refresh()->id;
+        $cartRepo = new CartRepository();
+        $cart = $cartRepo->getCartWithoutOrderForUser($userId);
+        if (!$cart) {
+            throw new \Exception("you haven't chosen any product yet!");
         }
-        return $this;
-    }
-
-    public function createCartItems(array $products, $cartId): static
-    {
-        $cartItemRepo = app(CartItemRepository::class);
-        foreach ($products as $product) {
-            $cartItemRepo->create([
-                'cart_id' => $cartId,
-                'product_id' => $product['id'],
-                'quantity' => $product['quantity'],
-            ]);
-        }
+        $this->data['cart_id'] = $cart->id;
         return $this;
     }
 
@@ -106,6 +96,14 @@ class OrderBuilder implements OrderBuilderInterface
         return $this;
     }
 
+    public function setShippingAddress($address = null): static
+    {
+        if (is_null($address)) {
+            $this->data['shipping_address'] = Auth::user()->address;
+        }
+        return $this;
+    }
+
     public function storeOrder()
     {
         $orderRepo = app(OrderRepository::class);
@@ -113,19 +111,20 @@ class OrderBuilder implements OrderBuilderInterface
         return $this->order->refresh();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function build(): Order
     {
         return $this->setDiscount($this->data['discount_code'] ?? null)
-            ->createCart($this->data['discount_id'] ?? null)
-            ->createCartItems($this->data['products'], $this->data['cart_id'])
+            ->setUser()
+            ->setCart($this->data['user_id'])
             ->calculateTotalAmount($this->data['cart_id'])
             ->calculateDiscountAmount($this->data['total_amount'], $this->data['discount_id'] ?? null)
             ->calculateSubTotalAmount($this->data['total_amount'], $this->data['discount_amount'])
-            ->setUser()
             ->setTrackingCode()
+            ->setShippingAddress($this->data['shipping_address'] ?? null)
             ->storeOrder();
-
     }
-
 
 }
