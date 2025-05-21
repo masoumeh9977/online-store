@@ -240,6 +240,7 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
+            let selectedCityId = @json($user->city_id);
             const $editAddressBtn = $('#editAddressBtn');
             const $addressDisplay = $('#addressDisplay');
             const $addressEditForm = $('#addressEditForm');
@@ -256,22 +257,27 @@
 
             $('#province').on('change', function () {
                 let provinceId = $(this).val();
+
                 let url = '{{route('province.get-cities', ':itemId')}}';
                 url = url.replace(':itemId', provinceId);
-                let userCityId = {{$user->city_id ?? ''}};
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: function (data) {
-                        let cities = data.data;
-                        let citySelect = $('#city');
-                        citySelect.empty().append('<option value="">Select a city</option>');
 
-                        $.each(cities, function (key, city) {
-                            citySelect.append('<option value="' + city.id + '" ' + (userCityId == city.id ? 'selected' : '') + '>' + city.name + '</option>');
-                        });
-                    }
-                });
+                if(provinceId){
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        success: function (data) {
+                            let cities = data.data;
+                            let citySelect = $('#city');
+                            citySelect.empty().append('<option value="">Select a city</option>');
+
+                            $.each(cities, function (key, city) {
+                                let isSelected = (city.id == selectedCityId) ? 'selected' : '';
+                                citySelect.append(`<option value="${city.id}" ${isSelected}>${city.name}</option>`);
+                            });
+                        }
+                    });
+                }
+
             });
 
             $('#province').trigger('change');
