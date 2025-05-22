@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('discount_amount')->default(0);
             $table->text('shipping_address');
             $table->foreignId('cart_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('discount_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('discount_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
