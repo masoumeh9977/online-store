@@ -1,13 +1,5 @@
-<footer class="footer footer-bar">
-    <div class="container text-center">
-        <div class="row align-items-center">
-            <div class="col-sm-6">
-                <div class="text-sm-start">
-                    <p class="mb-0">©
-                        <i class="mdi mdi-heart text-danger"></i> By Masoumeh
-                    </p>
-                </div>
-            </div>
-        </div>
+<footer class="bg-dark text-white mt-auto py-3">
+    <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center text-center">
+        <p class="mb-0">© <span class="text-danger">♥</span> By Masoumeh</p>
     </div>
 </footer>

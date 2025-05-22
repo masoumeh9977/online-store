@@ -29,11 +29,15 @@
             text-align: {{ App::getLocale() === 'fa' ? 'right' : 'left' }};
             font-family: {{ App::getLocale() === 'fa' ? 'IRANSansfanum' : 'sans-serif' }};
         }
+
+        .dropdown-menu {
+            text-align: start !important;
+        }
     </style>
     @yield('styles')
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 <!-- Loader -->
 <div id="preloader" class="d-none">
     <div id="status">
@@ -51,8 +55,9 @@
 
 @yield('carousel')
 
-@yield('content')
-
+<main class="flex-fill">
+    @yield('content')
+</main>
 <!-- Footer Start -->
 @include('website.layouts.footer')
 <!-- Footer End -->
