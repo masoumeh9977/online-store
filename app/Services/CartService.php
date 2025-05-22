@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\CartItem;
 use App\Services\Repositories\ModelRepositories\CartItemRepository;
 use App\Services\Repositories\ModelRepositories\CartRepository;
 
@@ -16,7 +17,7 @@ class CartService
         $this->cartItemRepository = new CartItemRepository();
     }
 
-    public function addItem($productId, $quantity, $userId)
+    public function addItem($productId, $quantity, $userId): void
     {
         try {
             $cart = $this->getUnusedCartForUser($userId);
@@ -26,6 +27,11 @@ class CartService
             throw new \Exception($e->getMessage());
         }
 
+    }
+
+    public function removeItem(CartItem $item): void
+    {
+        $this->cartItemRepository->delete($item->id);
     }
 
     public function getUnusedCartForUser($userId)

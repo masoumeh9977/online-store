@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::as('api.v1.')->prefix('v1/')->group(function () {
     Route::post('product/add', [CartController::class, 'addItem'])->name('product.add');
+    Route::delete('{cartItem}/product/remove', [CartController::class, 'removeItem'])->name('product.remove');
 
     Route::post('order/store', [OrderController::class, 'store'])->name('order.store');
     Route::get('{user}/orders', [OrderController::class, 'getUserOrders'])->name('orders.list');

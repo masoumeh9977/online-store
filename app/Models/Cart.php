@@ -21,7 +21,13 @@ class Cart extends Model
             ->withPivot('quantity');
     }
 
-    public function order(){
+    public function order()
+    {
         return $this->hasOne(Order::class);
+    }
+
+    public function getTotalAmountAttribute()
+    {
+        return $this->items->sum(fn($item) => $item->total_item_price);
     }
 }

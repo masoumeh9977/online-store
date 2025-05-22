@@ -14,7 +14,9 @@ class CartController extends Controller
 
     public function index()
     {
-        $items = $this->cartService->getUnusedCartForUser(Auth::user()->id)->items;
-        return view('website.cart.index', compact('items'));
+        $cart = $this->cartService->getUnusedCartForUser(Auth::user()->id);
+        $items = $cart->items;
+        $total = $cart->total_amount;
+        return view('website.cart.index', compact('items', 'total'));
     }
 }

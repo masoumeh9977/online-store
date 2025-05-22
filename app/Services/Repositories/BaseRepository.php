@@ -42,8 +42,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function delete($id, $conditions = [])
     {
         if ($id) {
-            $product = $this->find($id);
-            return $product?->delete();
+            $item = $this->find($id);
+            return $item?->delete();
         }
         return $this->model::where($conditions)->query()->delete();
     }
