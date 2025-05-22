@@ -9,7 +9,7 @@
     <meta name="keywords" content="Saas, Software, multi-uses, HTML, Clean, Modern"/>
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="shortcut icon" href="/images/favicon.ico">
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- Slider -->

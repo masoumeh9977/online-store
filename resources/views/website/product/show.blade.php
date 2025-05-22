@@ -1,6 +1,20 @@
 @extends('website.layouts.master')
 @section('title', 'Product')
+@section('styles')
+    <style>
+        /* Chrome, Safari, Edge, Opera */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
+        /* Firefox */
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+@endsection
 @section('content')
     <section class="section pb-0" style="margin-top: 4.6%;margin-bottom: 8%;">
         <div class="container mt-5 mb-5">
@@ -22,11 +36,54 @@
                         <p class="text-muted">{{$product->description}}</p>
 
                         <div class="mt-4 pt-2">
-                            <a href="shop-cart.html" class="btn btn-soft-primary ms-2">Add To Cart</a>
+                            @if(!$itemCount)
+                                <button class="btn btn-soft-primary update-cart ms-2">Add To Cart</button>
+                            @else
+                                <td class="text-center qty-icons">
+                                    <button class="btn btn-icon btn-soft-primary update-cart minus">-</button>
+                                    <input min="0" name="quantity" type="number" value="{{$itemCount}}"
+                                           class="btn btn-icon btn-soft-primary qty-btn quantity" readonly>
+                                    <button class="btn btn-icon btn-soft-primary plus update-cart">+</button>
+                                </td>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function () {
+            $('.update-cart').on('click', function () {
+                let quantity = 1;
+                if ($(this).siblings('input[type=number]').length) {
+                    if ($(this).hasClass('plus')) {
+                        $(this).siblings('input[type=number]').get(0).stepUp();
+                    } else {
+                        $(this).siblings('input[type=number]').get(0).stepDown();
+                    }
+                    quantity = $(this).siblings('input[type=number]').val();
+                }
+
+                $.ajax({
+                    url: '{{route('api.v1.product.add')}}',
+                    method: 'POST',
+                    data: {
+                        product_id: {{$product->id}},
+                        quantity: quantity,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+                        window.location.reload();
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

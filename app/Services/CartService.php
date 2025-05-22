@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Cart;
-use App\Models\Order;
 use App\Services\Repositories\ModelRepositories\CartItemRepository;
 use App\Services\Repositories\ModelRepositories\CartRepository;
 
@@ -37,6 +35,21 @@ class CartService
             $cart = $this->cartRepository->create(['user_id' => $userId]);
         }
         return $cart;
+    }
+
+    public function getProductCountInCart($userId, $productId)
+    {
+        $cart = $this->cartRepository->getCartWithoutOrderForUser($userId);
+
+        if (!$cart) {
+            return 0;
+        }
+        $item = $this->cartItemRepository->all(['cart_id' => $cart->id, 'product_id' => $productId]);
+
+        if (!$item || !count($item)) {
+            return 0;
+        }
+        return $item->first()->quantity;
     }
 
 }

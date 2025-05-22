@@ -29,15 +29,9 @@
                                 </a>
                                 <ul class="list-unstyled shop-icons">
                                     <li class="mt-2">
-                                        <a href="javascript:void(0)" data-bs-toggle="modal"
-                                           data-bs-target="#productview"
+                                        <a href="{{route('website.product.show', $product)}}"
                                            class="btn btn-icon btn-pills btn-soft-primary">
                                             <i data-feather="eye" class="icons"></i>
-                                        </a>
-                                    </li>
-                                    <li class="mt-2">
-                                        <a href="shop-cart.html" class="btn btn-icon btn-pills btn-soft-warning">
-                                            <i data-feather="shopping-cart" class="icons"></i>
                                         </a>
                                     </li>
                                 </ul>
