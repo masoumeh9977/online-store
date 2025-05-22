@@ -19,6 +19,7 @@
                             <a class="dropdown-item text-dark" href="{{route('website.logout')}}"><i
                                     class="uil uil-sign-out-alt align-middle me-1"></i> Logout </a>
                         </div>
+                        <x-shopping-cart-button />
                     </div>
                 @else
                     <a href="{{route('website.login.index')}}"
@@ -28,7 +29,6 @@
                 @endif
             </li>
         </ul>
-
 
         <div class="menu-extras">
             <div class="menu-item">
