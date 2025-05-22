@@ -31,6 +31,11 @@ class AppSetupCommand extends Command
             $this->call('migrate:fresh');
             $this->call('db:seed');
             $this->call('iran:import');
+            $this->call('make:filament-user', [
+                '--name' => 'superadmin',
+                '--email' => 'superadmin@gmail.com',
+                '--password' => '1234',
+            ]);
 
             $this->info('Application setup completed successfully.');
         } else {
