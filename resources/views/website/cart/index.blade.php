@@ -201,6 +201,559 @@
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
+
+        .cart-container {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .cart-header {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 25px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cart-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            animation: rotate 10s linear infinite;
+        }
+
+        .cart-header h2 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cart-header .cart-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modern-table {
+            margin: 0;
+        }
+
+        .modern-table thead th {
+            background: #f8fafc;
+            border: none;
+            padding: 20px 25px;
+            font-weight: 600;
+            color: #475569;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+
+        .modern-table thead th:first-child {
+            border-radius: 0;
+        }
+
+        .modern-table thead th:last-child {
+            border-radius: 0;
+        }
+
+        .modern-table tbody tr {
+            border: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .modern-table tbody tr:hover {
+            background: linear-gradient(135deg, #f8faff 0%, #fff8f8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .modern-table tbody tr::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25px;
+            right: 25px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, #e2e8f0 50%, transparent 100%);
+        }
+
+        .modern-table tbody tr:last-child::after {
+            display: none;
+        }
+
+        .modern-table td {
+            padding: 25px;
+            border: none;
+            vertical-align: middle;
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        .product-details h6 {
+            margin: 0 0 8px 0;
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 16px;
+        }
+
+        .product-category {
+            color: #64748b;
+            font-size: 13px;
+            background: #f1f5f9;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .price-display {
+            font-weight: 700;
+            font-size: 18px;
+            color: #059669;
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            padding: 8px 16px;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        .quantity-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            background: #f8fafc;
+            padding: 8px;
+            border-radius: 50px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-controls:hover {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .control-btn {
+            width: 35px;
+            height: 35px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .qty-input {
+            width: 50px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 16px;
+        }
+
+        .qty-input:focus {
+            outline: none;
+        }
+
+        .total-price {
+            font-weight: 700;
+            font-size: 20px;
+            color: #1e293b;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        .delete-btn {
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .delete-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .delete-btn:hover::before {
+            left: 100%;
+        }
+
+        .delete-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+        }
+
+        .cart-summary {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 30px;
+            border-top: 3px solid #e2e8f0;
+            position: relative;
+        }
+
+        .cart-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .summary-row:last-child {
+            margin: 0;
+            padding-top: 15px;
+            border-top: 2px dashed #cbd5e1;
+        }
+
+        .summary-label {
+            font-weight: 600;
+            color: #475569;
+            font-size: 16px;
+        }
+
+        .summary-value {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 18px;
+        }
+
+        .total-value {
+            font-size: 24px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-info {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .modern-table td {
+                padding: 20px 15px;
+            }
+
+            .cart-header {
+                padding: 20px;
+            }
+        }
+
+        .discount-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 25px 30px;
+            border-top: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .discount-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.1) 0%, transparent 70%);
+            animation: pulse-discount 4s ease-in-out infinite;
+        }
+
+        .discount-header {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .discount-header h5 {
+            margin: 0;
+            font-weight: 600;
+            color: #92400e;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+
+        .discount-form {
+            position: relative;
+            z-index: 2;
+        }
+
+        .discount-input-group {
+            display: flex;
+            gap: 0;
+            background: white;
+            border-radius: 50px;
+            padding: 5px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .discount-input-group:focus-within {
+            border-color: #f59e0b;
+            box-shadow: 0 5px 25px rgba(245, 158, 11, 0.3);
+        }
+
+        .discount-input {
+            flex: 1;
+            border: none;
+            padding: 15px 20px;
+            font-size: 16px;
+            background: transparent;
+            color: #1f2937;
+            font-weight: 500;
+        }
+
+        .discount-input:focus {
+            outline: none;
+        }
+
+        .discount-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .cart-summary {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 30px;
+            border-top: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .discount-row {
+            color: #059669;
+            animation: slideInDiscount 0.5s ease-out;
+        }
+
+        .discount-row .summary-label {
+            color: #059669;
+        }
+
+        .checkout-section {
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .checkout-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            animation: rotate 15s linear infinite;
+        }
+
+        .checkout-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .checkout-btn {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            border: none;
+            color: white;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(5, 150, 105, 0.3);
+        }
+
+        .checkout-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .checkout-btn:hover::before {
+            left: 100%;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(5, 150, 105, 0.4);
+        }
+
+        .checkout-amount {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .security-badge i {
+            color: #10b981;
+        }
+
+        @keyframes pulse-discount {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes slideInDiscount {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .checkout-actions {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .checkout-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .continue-shopping-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .discount-section {
+                padding: 20px;
+            }
+        }
     </style>
 @endsection
 
@@ -210,69 +763,96 @@
             @if(!count($items))
                 @include('website.cart.partials.empty')
             @else
-                <div class="row">
-                    <div class="col-12">
-                        <div class="table-responsive bg-white shadow">
-                            <table class="table table-center table-padding mb-0">
-                                <thead>
-                                <tr>
-                                    <th class="border-bottom py-3" style="min-width:20px "></th>
-                                    <th class="border-bottom py-3" style="min-width: 300px;">Product</th>
-                                    <th class="border-bottom text-center py-3" style="min-width: 160px;">Price</th>
-                                    <th class="border-bottom text-center py-3" style="min-width: 160px;">Quantity</th>
-                                    <th class="border-bottom text-center py-3" style="min-width: 160px;">Total</th>
-                                </tr>
-                                </thead>
 
-                                <tbody>
-
-                                @foreach($items as $item)
-                                    <tr class="shop-list" data-id="{{$item->product_id}}">
-                                        <td>
-                                            <button class="btn btn-icon btn-pills btn-danger delete-item-btn"
-                                                    data-id="{{$item->id}}"
-                                                    title="delete">
-                                                <i class="mdi mdi-delete"></i>
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <h6 class="mb-0 ms-3">{{$item->product->name}}</h6>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">{{$item->product->price}}$</td>
-                                        <td class="text-center qty-icons">
-                                            <button class="btn btn-icon btn-soft-primary update-cart minus">-</button>
-                                            <input min="0" name="quantity" value="{{$item->quantity}}" type="number"
-                                                   class="btn btn-icon btn-soft-primary qty-btn quantity">
-                                            <button class="btn btn-icon btn-soft-primary plus update-cart">+</button>
-                                        </td>
-                                        <td class="text-center fw-bold">{{$item->total_item_price}}$</td>
-                                    </tr>
-                                @endforeach
-
-                                </tbody>
-                            </table>
+                <div class="cart-container">
+                    <div class="cart-header">
+                        <h2>
+                            <div class="cart-icon">
+                                <i class="mdi mdi-shopping"></i>
+                            </div>
+                            Shopping Cart
+                        </h2>
+                    </div>
+                    <table class="table modern-table">
+                        <thead>
+                        <tr>
+                            <th style="min-width:70px"></th>
+                            <th style="min-width: 300px;">Product</th>
+                            <th class="text-center" style="min-width: 160px;">Price</th>
+                            <th class="text-center" style="min-width: 200px;">Quantity</th>
+                            <th class="text-center" style="min-width: 160px;">Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($items as $item)
+                            <tr class="shop-list" data-id="{{$item->product_id}}">
+                                <td class="text-center">
+                                    <button class="delete-btn delete-item-btn" data-id="{{$item->id}}"
+                                            title="Remove item">
+                                        <i class="mdi mdi-delete"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <div class="product-info">
+                                        <div class="product-image">
+                                            <i class="mdi mdi-laptop"></i>
+                                        </div>
+                                        <div class="product-details">
+                                            <h6>{{$item->product->name}}</h6>
+                                            <span class="product-category">{{$item->product->category->name}}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="price-display">${{$item->product->price}}</div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="quantity-controls">
+                                        <button class="control-btn update-cart minus">−</button>
+                                        <input type="number" class="qty-input" value="{{$item->quantity}}" min="1">
+                                        <button class="control-btn update-cart plus">+</button>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="total-price">${{$item->total_item_price}}</div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    <div class="discount-section">
+                        <div class="discount-header">
+                            <h5>
+                                <i class="mdi mdi-ticket-percent"></i>
+                                Have a discount code?
+                            </h5>
+                        </div>
+                        <div class="discount-form">
+                            <div class="discount-input-group">
+                                <input type="text"
+                                       class="discount-input"
+                                       placeholder="Enter discount code"
+                                       id="discountCode">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cart-summary">
+                        <div class="summary-row">
+                            <span class="summary-label">Total</span>
+                            <span class="summary-value total-value">${{$total}}</span>
+                        </div>
+                    </div>
+                    <div class="checkout-section">
+                        <div class="checkout-actions">
+                            <button class="checkout-btn">
+                                <i class="mdi mdi-credit-card"></i>
+                                Proceed to Checkout
+                                <span class="checkout-amount" id="checkoutAmount">${{$total}}</span>
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 ms-auto mt-4 pt-2">
-                        <div class="table-responsive bg-white rounded shadow">
-                            <table class="table table-center table-padding mb-0">
-                                <tbody>
-                                <tr class="bg-light">
-                                    <td class="h6">Total</td>
-                                    <td class="text-center fw-bold">{{$total}}$</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="mt-4 pt-2 text-end">
-                            <a href="" class="btn btn-primary">Save as order</a>
-                        </div>
-                    </div>
-                </div>
+
             @endif
 
         </div>
