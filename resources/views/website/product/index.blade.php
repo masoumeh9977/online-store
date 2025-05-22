@@ -1,10 +1,6 @@
 @extends('website.layouts.master')
 @section('title', 'Home')
 
-@section('carousel')
-    @include('website.partials.carousel')
-@endsection
-
 @section('content')
     <section class="section">
         <div class="container mt-100 mt-60">
