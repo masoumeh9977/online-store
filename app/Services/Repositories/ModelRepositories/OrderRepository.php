@@ -11,4 +11,9 @@ class OrderRepository extends BaseRepository
     {
        $this->model = new Order();
     }
+
+    public function getByUserIdQuery(int $userId)
+    {
+        return Order::where('user_id', $userId);
+    }
 }

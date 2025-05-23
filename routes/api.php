@@ -10,5 +10,5 @@ Route::as('api.v1.')->prefix('v1/')->group(function () {
     Route::delete('{cartItem}/product/remove', [CartController::class, 'removeItem'])->name('product.remove');
 
     Route::post('order/store', [OrderController::class, 'store'])->name('order.store');
-    Route::get('{user}/orders', [OrderController::class, 'getUserOrders'])->name('orders.list');
+    Route::get('{order}/show', [OrderController::class, 'show'])->name('order.show');
 });

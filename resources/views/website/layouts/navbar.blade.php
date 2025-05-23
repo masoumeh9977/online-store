@@ -13,13 +13,13 @@
                              style="width: 200px;">
                             <a class="dropdown-item text-dark" href="{{route('website.my.profile')}}"><i
                                     class="uil uil-user align-middle me-1"></i>Profile</a>
-                            <a class="dropdown-item text-dark" href="#"><i
+                            <a class="dropdown-item text-dark" href="{{route('website.my.orders')}}"><i
                                     class="uil uil-clipboard-notes align-middle me-1"></i>My Orders</a>
                             <div class="dropdown-divider my-3 border-top"></div>
                             <a class="dropdown-item text-dark" href="{{route('website.logout')}}"><i
                                     class="uil uil-sign-out-alt align-middle me-1"></i> Logout </a>
                         </div>
-                        <x-shopping-cart-button />
+                        <x-shopping-cart-button/>
                     </div>
                 @else
                     <a href="{{route('website.login.index')}}"
