@@ -6,18 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\BaseResource;
 use App\Models\Product;
 use App\Services\CartService;
-use App\Services\ProductService;
+use App\Services\Repositories\ModelRepositories\CategoryRepository;
+use App\Services\Repositories\ModelRepositories\ProductRepository;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function __construct(protected CartService $cartService, protected ProductService $productService)
+    public function __construct(protected CartService        $cartService,
+                                protected ProductRepository  $productRepository,
+                                protected CategoryRepository $categoryRepository)
     {
     }
 
-    public function index()
+    public function index($category = null)
     {
-        $products = $this->productService->getLatestItems(10);
+        $condition = [];
+        if ($category) {
+            $category = $this->categoryRepository->all(['name' => $category])?->first();
+            $condition['category_id'] = $category->id;
+        }
+        $products = $this->productRepository->paginate(conditions: $condition);
         return view('website.product.index', compact('products'));
     }
 

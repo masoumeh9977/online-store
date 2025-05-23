@@ -35,7 +35,7 @@ Route::as('website.')->prefix('')->group(function () {
     });
 
     Route::as('product.')->prefix('product')->group(function () {
-        Route::get('', [ProductController::class, 'index'])->name('index');
+        Route::get('{category?}', [ProductController::class, 'index'])->name('index');
         Route::get('{product}/show', [ProductController::class, 'show'])->name('show');
     });
 

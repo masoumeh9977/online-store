@@ -12,7 +12,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $this->model::where($conditions)->get();
     }
 
-    public function paginate(int $perPage = 15, array $conditions = [])
+    public function paginate(int $perPage = 4, array $conditions = [])
     {
         return $this->model::where($conditions)->paginate($perPage);
     }
@@ -21,6 +21,11 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model::find($id);
 
+    }
+
+    public function limit($limit, array $conditions = [])
+    {
+        return $this->model::where($conditions)->limit($limit)->get();
     }
 
     public function create(array $data)

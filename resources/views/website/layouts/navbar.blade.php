@@ -52,7 +52,8 @@
                     <a href="javascript:void(0)">Categories </a><span class="menu-arrow"></span>
                     <ul class="submenu">
                         @foreach(\App\Models\Category::all() as $category)
-                            <li><a href="#" class="sub-menu-item">{{$category->name}} </a></li>
+                            <li><a href="{{route('website.product.index', ['category' => $category->name])}}"
+                                   class="sub-menu-item">{{$category->name}} </a></li>
                         @endforeach
                     </ul>
                 </li>

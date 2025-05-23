@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BaseResource;
 use App\Models\IranProvince;
-use App\Services\ProductService;
+use App\Services\Repositories\ModelRepositories\ProductRepository;
 
 class IndexController extends Controller
 {
-    public function index(ProductService $service)
+    public function index(ProductRepository $repository)
     {
-        $products = $service->getLatestItems(4);
+        $products = $repository->limit(4);
         return view('website.index', compact('products'));
     }
 

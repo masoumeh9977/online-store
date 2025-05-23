@@ -58,7 +58,7 @@
 
         function loadProducts(currentPage) {
             loadingNextPage = true;
-            let url = '{{route('api.v1.product.fetch')}}';
+            let url = '{{route('api.v1.product.fetch', ['category' => request()->route('category')])}}';
             url = url + '?page=' + currentPage;
             $.ajax({
                 url: url,

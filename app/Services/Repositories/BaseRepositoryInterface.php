@@ -10,6 +10,9 @@ interface BaseRepositoryInterface
 
     public function find($id);
 
+    public function limit($limit, array $conditions = []);
+
+
     public function create(array $data);
 
     public function update($item, array $data);
