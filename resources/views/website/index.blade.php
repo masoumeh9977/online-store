@@ -13,7 +13,7 @@
                     <h5 class="mb-0">New Arrivals</h5>
                 </div>
                 <div class="col-1">
-                    <a href="#">more</a>
+                    <a href="{{route('website.product.index')}}">more</a>
                 </div>
             </div>
             <div class="row">
