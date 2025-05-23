@@ -6,6 +6,7 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Scopes\ActiveScope;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -19,6 +20,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProductResource extends Resource
 {
@@ -29,6 +31,11 @@ class ProductResource extends Resource
     public static function getNavigationSort(): ?int
     {
         return 2;
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return Product::withoutGlobalScope(ActiveScope::class);
     }
 
     public static function form(Form $form): Form

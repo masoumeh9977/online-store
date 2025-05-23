@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\HasMediaTrait;
+use App\Models\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -25,13 +26,14 @@ class Product extends Model implements HasMedia
         'is_active' => 'boolean',
     ];
 
+    protected static function booted()
+    {
+        static::addGlobalScope(new ActiveScope);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', true);
-    }
 }
