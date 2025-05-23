@@ -43,7 +43,7 @@
 
 @section('scripts')
     <script>
-        let currentPage = 0;
+        let currentPage = 1;
         let loadingNextPage = false;
         $(document).ready(function () {
             $(window).on('scroll', function () {
