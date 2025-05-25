@@ -24,7 +24,7 @@ class CarouselItemResource extends Resource
 {
     protected static ?string $model = CarouselItem::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-photo';
+
     protected static ?string $navigationGroup = 'Settings';
 
     public static function getNavigationSort(): ?int
