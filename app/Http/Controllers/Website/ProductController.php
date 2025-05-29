@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\BaseResource;
 use App\Models\Product;
 use App\Services\CartService;
 use App\Services\Repositories\ModelRepositories\CategoryRepository;
@@ -37,7 +36,8 @@ class ProductController extends Controller
             return view('website.product.show', compact('product', 'itemCount'));
         } catch (\Exception $e) {
             logger()->error($e);
-            return BaseResource::error($e->getMessage());
+            alert()->error($e->getMessage());
+            return redirect()->back();
         }
     }
 }

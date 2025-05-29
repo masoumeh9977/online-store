@@ -70,7 +70,7 @@
 
         function loadOrderDetails(orderId) {
             $('#orderModal').modal('show');
-            let url = '{{route('api.v1.order.show', ':itemId')}}';
+            let url = '{{route('website.api.v1.order.show', ':itemId')}}';
             url = url.replace(':itemId', orderId);
             $.ajax({
                 url: url,

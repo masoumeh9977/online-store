@@ -124,7 +124,7 @@
                 }
 
                 $.ajax({
-                    url: '{{route('api.v1.product.add')}}',
+                    url: '{{route('website.api.v1.product.add')}}',
                     method: 'POST',
                     data: {
                         product_id: productId,
@@ -156,7 +156,7 @@
                     cancelButtonText: 'Cancel'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        let url = '{{route('api.v1.product.remove', ':itemId')}}';
+                        let url = '{{route('website.api.v1.product.remove', ':itemId')}}';
                         url = url.replace(':itemId', itemId);
                         $.ajax({
                             url: url,
@@ -187,7 +187,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '{{route('api.v1.order.store')}}',
+                            url: '{{route('website.api.v1.order.store')}}',
                             type: 'POST',
                             data: {
                                 _token: '{{ csrf_token() }}',

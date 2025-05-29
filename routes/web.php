@@ -9,7 +9,7 @@ use App\Http\Controllers\Website\ProductController;
 use App\Http\Controllers\Website\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::as('website.')->prefix('')->group(function () {
+Route::middleware(['web'])->as('website.')->prefix('')->group(function () {
 
     Route::get('/', [IndexController::class, 'index'])->name('index');
 
@@ -21,14 +21,13 @@ Route::as('website.')->prefix('')->group(function () {
     Route::get('signup', [AuthController::class, 'signupIndex'])->name('signup.index');
     Route::post('signup', [AuthController::class, 'signup'])->name('signup');
 
-    Route::as('my.')->prefix('my')->group(function () {
+    Route::middleware(['auth', 'role.customer'])->as('my.')->prefix('my')->group(function () {
         Route::get('profile', [MyController::class, 'profile'])->name('profile');
         Route::get('orders', [MyController::class, 'orders'])->name('orders');
         Route::get('order/list', [MyController::class, 'getOrdersListAjax'])->name('order.list');
-
     });
 
-    Route::as('user.')->prefix('user')->group(function () {
+    Route::middleware(['auth', 'role.customer'])->as('user.')->prefix('user')->group(function () {
         Route::post('update', [UserController::class, 'updateUser'])->name('update');
         Route::post('reset/password', [UserController::class, 'resetPassword'])->name('reset.password');
         Route::post('reset/address', [UserController::class, 'resetAddress'])->name('reset.address');
@@ -36,13 +35,21 @@ Route::as('website.')->prefix('')->group(function () {
 
     Route::as('product.')->prefix('product')->group(function () {
         Route::get('{category?}', [ProductController::class, 'index'])->name('index');
-        Route::get('{product}/show', [ProductController::class, 'show'])->name('show');
+        Route::middleware(['auth', 'role.customer'])->get('{product}/show', [ProductController::class, 'show'])->name('show');
     });
 
-    Route::as('cart.')->prefix('cart')->group(function () {
+    Route::middleware(['auth', 'role.customer'])->as('cart.')->prefix('cart')->group(function () {
         Route::get('', [CartController::class, 'index'])->name('index');
     });
 
+});
+
+Route::middleware(['web', 'auth', 'role.customer'])->as('website.api.v1.')->prefix('website/api/v1/')->group(function () {
+    Route::post('product/add', [App\Http\Controllers\Api\CartController::class, 'addItem'])->name('product.add');
+    Route::delete('{cartItem}/product/remove', [App\Http\Controllers\Api\CartController::class, 'removeItem'])->name('product.remove');
+
+    Route::post('order/store', [OrderController::class, 'store'])->name('order.store');
+    Route::get('{order}/show', [OrderController::class, 'show'])->name('order.show');
 });
 
 Route::get('{province}/get-cities', [IndexController::class, 'getCities'])->name('province.get-cities');

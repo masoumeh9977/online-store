@@ -69,7 +69,7 @@
                 }
 
                 $.ajax({
-                    url: '{{route('api.v1.product.add')}}',
+                    url: '{{route('website.api.v1.product.add')}}',
                     method: 'POST',
                     data: {
                         product_id: {{$product->id}},
@@ -80,7 +80,11 @@
                         window.location.reload();
                     },
                     error: function (xhr) {
-
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: xhr.responseJSON.message
+                        });
                     }
                 });
             });
