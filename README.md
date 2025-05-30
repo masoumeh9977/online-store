@@ -68,7 +68,7 @@ The admin panel is built with **Filament**, supporting:
 ## 🧪 Setup Instructions
 
 ```bash
-git clone https://github.com/masoumeh9977/your-sample-project.git
+git clone https://github.com/masoumeh9977/online-store.git
 cd your-sample-project
 
 composer install
