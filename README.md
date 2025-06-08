@@ -3,7 +3,20 @@
 This repository is a **sample Laravel project** demonstrating my ability to build web applications. It includes a variety of Laravel features, design patterns, and tools commonly used in real-world systems.
 This is a Laravel-based e-commerce web application built to simulate a real-world online shopping experience. The project includes a full-featured customer-facing storefront and a secure admin panel for managing products, categories, orders, discounts and users.
 
-It is designed with clean code architecture, RESTful principles, and best practices in mind — ideal for demonstrating Laravel skills in a professional portfolio.
+### 🛒 Storefront (Customer Side)
+- Product listing with pagination
+- Product detail pages
+- Shopping cart and checkout system
+- User registration and login
+- Order history and tracking
+- Automatic email includes order summary and delivery details
+
+### 🔐 Admin Panel
+- Admin authentication
+- CRUD management for:Products, Categories, Orders, Users
+- Role-based access control
+- File uploads for product images
+
 ---
 
 ## 🚀 Features & Laravel Concepts Demonstrated
